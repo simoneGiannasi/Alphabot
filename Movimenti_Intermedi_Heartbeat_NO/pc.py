@@ -4,7 +4,7 @@ from pynput import keyboard
 tastiConcessi = ["w", "a", "s", "d"]
 tastiPremuti = list()
 # Definizione dell'indirizzo del server
-server_tcp_address = ("192.168.1.129", 34512)
+server_tcp_address = ("192.168.1.124", 12345)
 
 # Creazione del socket TCP del client
 client_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

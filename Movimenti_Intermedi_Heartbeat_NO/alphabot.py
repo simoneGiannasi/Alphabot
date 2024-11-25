@@ -25,7 +25,7 @@ def direzione(messaggio):
 
 
 tastiConcessi = ["w", "a", "s", "d"]
-alphabot_address = ("192.168.1.129", 34512)
+alphabot_address = ("192.168.1.124", 12345)
 
 alphabot_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 alphabot_tcp.bind(alphabot_address)

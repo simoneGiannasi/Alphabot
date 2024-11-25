@@ -1,32 +1,33 @@
 import socket
 import alphaLib
 
-def direzione(messaggio):
+def direzione(comandi):
+    # Inizializza i valori di velocità
     right = 0
     left = 0
-    if "w" in messaggio:
-        right = 50
-        left = 50
-    elif "s" in messaggio and "w" not in messaggio:
-        right = -50
-        left = -50
-    if "a" in messaggio:
-        if right >= 0:
-            right += 20
-        else:
-            right -= 20
-    if "d" in messaggio and "a" not in messaggio:
-        if left >= 0:
-            left += 20
-        else:
-            left -= 20
+
+    # Analizza i comandi ricevuti
+    for comando in comandi:
+        if comando == "w":  # Avanti
+            right = 50
+            left = -50
+        elif comando == "s":  # Indietro
+            right = -50
+            left = 50
+        elif comando == "a":  # Sinistra
+            right = 20  # Riduce la velocità della ruota destra
+            left = -50   # Mantiene la velocità della ruota sinistra
+        elif comando == "d":  # Destra
+            right = 50   # Mantiene la velocità della ruota destra
+            left = -20    # Riduce la velocità della ruota sinistra
+
+    # Imposta i motori con i valori calcolati
     alpha.setMotor(left, right)
 
+# Impostazione dell'indirizzo del server
+alphabot_address = ("192.168.1.124", 34512)
 
-
-tastiConcessi = ["w", "a", "s", "d"]
-alphabot_address = ("192.168.1.129", 34512)
-
+# Creazione del socket TCP del server
 alphabot_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 alphabot_tcp.bind(alphabot_address)
 alphabot_tcp.listen(1)
@@ -39,22 +40,15 @@ try:
         print(f"Connessione accettata da {address}")
         while True:
             messaggio = client.recv(4096).decode('utf-8')
-            if messaggio in tastiConcessi:
-                direzione(messaggio)
+            if messaggio:
+                if messaggio == 'end':
+                    print("Chiusura connessione...")
+                    client.close()
+                    break
+                comandi = messaggio.split(",")  # Splitta i comandi
+                direzione(comandi)
                 print(f"Comando ricevuto: {messaggio}")
-            elif messaggio == 'stop':
-                alpha.stop()
-            elif messaggio == 'end':
-                print("Chiusura connessione...")
-                client.close()
-                break
             else:
-                print("Comando non riconosciuto.")
-
-except KeyboardInterrupt:
-    print("Server interrotto manualmente.")
+                break  # Chiude la connessione se non ci sono più messaggi
 finally:
     alphabot_tcp.close()
-    print("Server chiuso.")
-
-

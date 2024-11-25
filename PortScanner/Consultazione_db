@@ -1,0 +1,22 @@
+import sqlite3
+DB_NAME = './ip_list.db'
+
+def query_database():
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+    
+    # Interroga il database
+    cursor.execute('''
+        SELECT ip_host, nome_host, port_list FROM ports WHERE nome_host IS NOT NULL
+    ''')
+    
+    results = cursor.fetchall()
+    
+    for row in results:
+        print(f'IP: {row[0]}, Host Name: {row[1]}, Open Ports: {row[2]}')
+    
+    conn.close()
+
+if __name__ == '__main__':
+    query_database()
+    print("Finished")
