@@ -4,7 +4,7 @@ import socket
 #facciamo la split su i :
 
 buffer_size = 4096
-indirizzo_server = '192.168.1.97'
+indirizzo_server = 'localhost'  # L'indirizzo server dove il server è in esecuzione
 porta_server = 22222  # La porta deve essere un intero
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

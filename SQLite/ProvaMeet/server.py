@@ -2,7 +2,7 @@ import socket
 import sqlite3
 from threading import Thread
 
-indirizzo = '192.168.1.97'
+indirizzo = 'localhost'
 porta = 22222
 buffer_size = 1024
 
