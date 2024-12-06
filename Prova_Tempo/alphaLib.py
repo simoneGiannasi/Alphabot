@@ -70,10 +70,10 @@ class AlphaBot(object):
 			GPIO.output(self.IN2,GPIO.HIGH)
 			self.PWMA.ChangeDutyCycle(0 - right)
 		if((left >= 0) and (left <= 100)):
-			GPIO.output(self.IN3,GPIO.LOW)
-			GPIO.output(self.IN4,GPIO.HIGH)
-			self.PWMB.ChangeDutyCycle(left)
-		elif((left < 0) and (left >= -100)):
 			GPIO.output(self.IN3,GPIO.HIGH)
 			GPIO.output(self.IN4,GPIO.LOW)
+			self.PWMB.ChangeDutyCycle(left)
+		elif((left < 0) and (left >= -100)):
+			GPIO.output(self.IN3,GPIO.LOW)
+			GPIO.output(self.IN4,GPIO.HIGH)
 			self.PWMB.ChangeDutyCycle(0 - left)

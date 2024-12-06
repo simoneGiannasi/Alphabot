@@ -5,20 +5,22 @@ def direzione(comandi):
     # Inizializza i valori di velocità
     right = 0
     left = 0
-    
+
     # Analizza i comandi ricevuti
     for comando in comandi:
         if comando == "w":  # Avanti
-            right += 50
-            left += 50
+            right = 50
+            left = -50
         elif comando == "s":  # Indietro
-            right -= 50
-            left -= 50
+            right = -50
+            left = 50
         elif comando == "a":  # Sinistra
-            right += 50  
+            right = 20  # Riduce la velocità della ruota destra
+            left = -50   # Mantiene la velocità della ruota sinistra
         elif comando == "d":  # Destra
-            left += 50    
-    print(left,right)
+            right = 50   # Mantiene la velocità della ruota destra
+            left = -20    # Riduce la velocità della ruota sinistra
+
     # Imposta i motori con i valori calcolati
     alpha.setMotor(left, right)
 
@@ -33,7 +35,6 @@ print("Server AlphaBot in ascolto...")
 
 alpha = alphaLib.AlphaBot()
 try:
-    alpha.setMotor(0, 0)
     while True:
         client, address = alphabot_tcp.accept()
         print(f"Connessione accettata da {address}")
